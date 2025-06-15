@@ -29,7 +29,30 @@
         </div>
     </header>
   </div>
-  <div id="div0"></div>
+  <div id="main-container" style="display: flex; width: 100%; height: 100vh;">
+    <div id="viewer-container" style="flex: 1; height: 100%; overflow: hidden;">
+      <div id="div0"></div>
+    </div>
+    <div id="input-panel" style="width: 350px; height: 100%; background: #f5f5f5; border-left: 1px solid #ddd; padding: 20px; box-sizing: border-box; overflow-y: auto;">
+      <h3 style="margin-top: 0; color: #333; font-family: Arial, sans-serif;">Load Structure</h3>
+      <div id="input-content">
+        <div style="margin-bottom: 20px;">
+          <label for="pdb-input" style="display: block; margin-bottom: 8px; font-weight: bold; color: #555;">Enter PDB ID:</label>
+          <input type="text" id="pdb-input" placeholder="e.g., 1TUP, 1HHO" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+        </div>
+        <div style="margin-bottom: 20px;">
+          <button id="load-structure" style="width: 100%; padding: 10px; background: #0066cc; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">Load Structure</button>
+        </div>
+        <div style="margin-bottom: 20px;">
+          <label for="multi-input" style="display: block; margin-bottom: 8px; font-weight: bold; color: #555;">Multiple IDs (comma-separated):</label>
+          <input type="text" id="multi-input" placeholder="e.g., 1HHO,4N7N,P69905" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+        </div>
+        <div style="margin-bottom: 20px;">
+          <button id="load-multiple" style="width: 100%; padding: 10px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">Load Multiple</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <link rel="stylesheet" href="lib/jquery-ui-1.13.2.min.css">
   <link rel="stylesheet" href="icn3d_3.44.0.css">
@@ -60,9 +83,76 @@
           //});
       }
 
+      function setupInputPanel(cfg, version) {
+          // Handle single PDB input
+          $("#load-structure").click(async function() {
+              var pdbId = $("#pdb-input").val().trim();
+              if (pdbId) {
+                  // Clear any existing viewer content
+                  $("#div0").empty();
+                  
+                  // Create fresh config with proper constraints
+                  var newCfg = Object.assign({}, cfg);
+                  newCfg.pdbid = pdbId;
+                  newCfg.width = $('#viewer-container').width();
+                  newCfg.height = $('#viewer-container').height();
+                  newCfg.resize = false;
+                  
+                  await setupViewer('pdbid', pdbId, newCfg);
+              }
+          });
+
+          // Handle multiple PDB input
+          $("#load-multiple").click(async function() {
+              var multiIds = $("#multi-input").val().trim();
+              if (multiIds) {
+                  // Clear any existing viewer content
+                  $("#div0").empty();
+                  
+                  // Create fresh config with proper constraints
+                  var newCfg = Object.assign({}, cfg);
+                  newCfg.mmdbafid = multiIds;
+                  newCfg.idname = 'mmdbafid';
+                  newCfg.idvalue = multiIds;
+                  newCfg.divid = 'div0';
+                  newCfg.width = $('#viewer-container').width();
+                  newCfg.height = $('#viewer-container').height();
+                  newCfg.resize = false;
+
+                  var icn3dui = new icn3d.iCn3DUI(newCfg);
+                  await icn3dui.show3DStructure();
+              }
+          });
+
+          // Handle Enter key in input fields
+          $("#pdb-input").keypress(function(e) {
+              if (e.which == 13) {
+                  $("#load-structure").click();
+              }
+          });
+
+          $("#multi-input").keypress(function(e) {
+              if (e.which == 13) {
+                  $("#load-multiple").click();
+              }
+          });
+      }
+
       async function launchIcn3d(version) {
           var cfg = getConfig();
           cfg.version = version;
+          
+          // Wait for DOM and configure viewer for split screen layout
+          await new Promise(resolve => setTimeout(resolve, 10)); // Small delay for DOM
+          var viewerWidth = $('#viewer-container').width() || window.innerWidth - 350; // fallback
+          var viewerHeight = $('#viewer-container').height() || window.innerHeight;
+          
+          cfg.width = viewerWidth;
+          cfg.height = viewerHeight;
+          cfg.resize = false; // Prevent full window takeover
+
+          // Initialize input panel event handlers
+          setupInputPanel(cfg, version);
 
           if(cfg.bcifid !== undefined) {
               await setupViewer('bcifid', cfg.bcifid, cfg);
@@ -140,6 +230,7 @@
               await icn3dui.show3DStructure();
           }
           else {
+              // Always show the viewer, even without initial structure
               await setupViewer('', '', cfg);
           }
       }
@@ -147,6 +238,11 @@
       async function setupViewer(idName, idValue, cfg) {
         cfg.idname = idName;
         cfg.idvalue = idValue;
+        
+        // Configure viewer to use only the left side of split screen
+        cfg.width = $('#viewer-container').width();
+        cfg.height = $('#viewer-container').height();
+        cfg.resize = false; // Disable auto-resize to prevent full window takeover
         
         var maxStructure = 5; // show max 5 structures
 

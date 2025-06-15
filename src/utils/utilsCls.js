@@ -411,8 +411,19 @@ class UtilsCls {
             return;
         }
 
-        me.htmlCls.WIDTH = $( window ).width() - me.htmlCls.LESSWIDTH;
-        me.htmlCls.HEIGHT = $( window ).height() - me.htmlCls.EXTRAHEIGHT - me.htmlCls.LESSHEIGHT;
+        // Check if we're in split screen mode (cfg.width is set and resize is disabled)
+        if(me.cfg.width && me.cfg.resize === false) {
+            me.htmlCls.WIDTH = parseInt(me.cfg.width);
+            me.htmlCls.HEIGHT = parseInt(me.cfg.height);
+        } else {
+            me.htmlCls.WIDTH = $( window ).width() - me.htmlCls.LESSWIDTH;
+            me.htmlCls.HEIGHT = $( window ).height() - me.htmlCls.EXTRAHEIGHT - me.htmlCls.LESSHEIGHT;
+        }
+
+        // Skip additional width/height calculations if we're in split screen mode
+        if(me.cfg.width && me.cfg.resize === false) {
+            return; // Use the values we already set above
+        }
 
         // width from css
         let viewer_width, viewer_height;
