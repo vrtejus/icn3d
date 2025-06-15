@@ -14,6 +14,7 @@ var rollup = require('rollup');
 var resolve = require('rollup-plugin-node-resolve');
 //https://source.netsyms.com/Mirrors/Vestride_Shuffle/commit/3be38c640d9b8394054097fdd59dee5fadbe0b88
 var {terser} = require('rollup-plugin-terser');
+var browserSync = require('browser-sync').create();
 
 var dist = 'dist';
 var build = 'build';
@@ -414,3 +415,40 @@ gulp.task('zip',
 gulp.task('default',
   gulp.series('dist','zip')
 );
+
+// Watch tasks for development
+gulp.task('watch-js', function() {
+  return gulp.watch('src/**/*.js', gulp.series('third', 'rollup', 'all', function(done) {
+    browserSync.reload();
+    done();
+  }));
+});
+
+gulp.task('watch-css', function() {
+  return gulp.watch(['css/**/*.css', 'src/thirdparty/color-pick/color-picker.css'], gulp.series('mod-line-awesome', 'copy-rename2', function(done) {
+    browserSync.reload('*.css');
+    done();
+  }));
+});
+
+gulp.task('watch-html', function() {
+  return gulp.watch(['*.html', 'example/*.html'], gulp.series('html', 'html2', 'html3', 'html4', function(done) {
+    browserSync.reload();
+    done();
+  }));
+});
+
+// Browser-sync server task
+gulp.task('serve', function() {
+  return browserSync.init({
+    server: {
+      baseDir: './dist'
+    },
+    port: 3000,
+    open: true,
+    notify: false
+  });
+});
+
+// Development task that builds and starts watching
+gulp.task('dev', gulp.series('dist', gulp.parallel('serve', 'watch-js', 'watch-css', 'watch-html')));

@@ -2,6 +2,71 @@
 
 ## [Gallery with live examples](https://www.ncbi.nlm.nih.gov/Structure/icn3d/icn3d.html#gallery), [Tutorial](https://www.ncbi.nlm.nih.gov/Structure/icn3d/icn3d.html#videos)
 
+## Development Setup
+
+### Quick Start
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server with hot reload
+npm run dev
+```
+
+This will:
+- Build the project to the `dist/` directory
+- Start a development server at http://localhost:3000
+- Automatically open your browser
+- Watch for file changes and auto-reload
+
+### Available Scripts
+
+- `npm run dev` - Start development server with hot reload
+- `npm run build` - Build production files to `dist/`
+- `gulp dev` - Same as `npm run dev` (direct gulp command)
+- `gulp dist` - Same as `npm run build` (direct gulp command)
+- `gulp default` - Build and create zip file
+
+### Development Features
+
+The development server includes:
+- **Hot reload**: Automatically refreshes browser when files change
+- **CSS injection**: CSS changes reload without page refresh
+- **File watching**: Monitors changes in:
+  - `src/**/*.js` - JavaScript source files
+  - `css/**/*.css` - CSS stylesheets  
+  - `*.html` - HTML files
+- **Auto-building**: Automatically rebuilds when source files change
+
+### Project Structure
+
+```
+icn3d/
+├── src/                    # Source JavaScript files
+│   ├── icn3d/             # Core iCn3D modules
+│   ├── html/              # HTML generation
+│   ├── utils/             # Utility classes
+│   ├── thirdparty/        # Third-party libraries
+│   └── icn3dui.js         # Main entry point
+├── css/                   # CSS source files
+├── dist/                  # Built files (generated)
+├── script/                # Additional scripts
+├── ssimages/              # Static images
+├── gulpfile.js            # Build configuration
+└── package.json           # Dependencies and scripts
+```
+
+### Build Process
+
+1. **Clean**: Removes old `dist/` files
+2. **Copy Libraries**: jQuery, jQuery UI, Line Awesome fonts
+3. **Process Assets**: Images, scripts, WASM files
+4. **Build CSS**: Concatenates and processes stylesheets
+5. **Build JavaScript**: Uses Rollup to bundle modules from `src/`
+6. **Generate HTML**: Processes HTML files with versioned assets
+7. **Output**: All built files go to `dist/` directory
+
 ## About iCn3D
 
 "I see in 3D" (iCn3D) Structure Viewer is not only a web-based 3D viewer, but also a structure analysis tool interactively or in the batch mode using NodeJS scripts based on the npm package icn3d. iCn3D synchronizes the display of 3D structure, 2D interaction, and 1D sequences and annotations. Users' custom display can be saved in a short URL or a PNG image. <b>The complete package of iCn3D</b> including Three.js and jQuery is in the directory "dist" after you get the source code with the "Code" button. You can click the file "index.html" in the "dist" directory to launch a local version of iCn3D.
