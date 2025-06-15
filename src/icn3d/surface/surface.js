@@ -124,16 +124,6 @@ class Surface {
 
             ps = this.SetupMap(cfg);
         }
-        else if(type == 14) { // phimap, equipotential
-            cfg.header = ic.mapData.headerPhi;
-            cfg.data = ic.mapData.dataPhi;
-            cfg.matrix = ic.mapData.matrixPhi;
-            cfg.isovalue = ic.mapData.contourPhi;
-            cfg.type = 'phi';
-            cfg.loadPhiFrom = ic.loadPhiFrom;
-            
-            ps = this.SetupMap(cfg);
-        }
         else {
              //1: van der waals surface, 2: molecular surface, 3: solvent accessible surface
              
@@ -158,12 +148,6 @@ class Surface {
                 bCalcArea: ic.bCalcArea
             };
 
-            cfg.header = ic.mapData.headerPhi; // header.bSurface is true
-            cfg.data = ic.mapData.dataPhi;
-            cfg.matrix = ic.mapData.matrixPhi;
-            cfg.isovalue = ic.mapData.contourPhi;
-            //cfg.type = 'phi';
-            cfg.loadPhiFrom = ic.loadPhiFrom;
             //cfg.icn3d = me;
 
             //cfg.rmsd_supr: ic.rmsd_supr
@@ -243,8 +227,7 @@ class Surface {
           centerTo = ic.rmsd_supr.trans2;
         }
 
-        // Direct "delphi" calculation uses the transformed PDB file, not the original PDB
-        let bTrans = (type == 11 || type == 12 || type == 13 || (type == 14 && ic.loadPhiFrom != 'delphi') )
+        let bTrans = (type == 11 || type == 12 || type == 13)
           && ic.rmsd_supr !== undefined && ic.rmsd_supr.rot !== undefined;
 
         //geo = new THREE.Geometry();

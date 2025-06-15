@@ -118,7 +118,6 @@ import {Selection} from './selection/selection.js';
 import {Resid2spec} from './selection/resid2spec.js';
 import {FirstAtomObj} from './selection/firstAtomObj.js';
 
-import {Delphi} from './analysis/delphi.js';
 import {Dssp} from './analysis/dssp.js';
 import {Refnum} from './annotations/refnum.js';
 import {Scap} from './analysis/scap.js';
@@ -645,7 +644,6 @@ class iCn3D {
     this.selectionCls = new Selection(this);
     this.resid2specCls = new Resid2spec(this);
 
-    this.delphiCls = new Delphi(this);
     this.dsspCls = new Dssp(this);
     this.refnumCls = new Refnum(this);
     this.scapCls = new Scap(this);

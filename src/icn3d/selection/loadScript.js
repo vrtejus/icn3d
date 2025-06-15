@@ -169,12 +169,6 @@ class LoadScript {
                 await thisClass.applyCommandEmmap(strArray[0].trim());
               }
           }
-          else if(command.indexOf('set phi') == 0) {
-              await ic.delphiCls.applyCommandPhi(strArray[0].trim());
-          }
-          else if(command.indexOf('set delphi') == 0) {
-              await ic.delphiCls.applyCommandDelphi(strArray[0].trim());
-          }
           else if(command.indexOf('view annotations') == 0) { // the command may have "|||{"factor"...
               if(Object.keys(ic.proteins).length > 0) {
                 await thisClass.applyCommandAnnotationsAndCddSite(strArray[0].trim());
@@ -387,12 +381,6 @@ class LoadScript {
                     }
                     else if(lastCommand.indexOf('set emmap') !== -1 && lastCommand.indexOf('set emmap wireframe') === -1) {
                         await thisClass.applyCommandEmmap(lastCommand);
-                    }
-                    else if(lastCommand.indexOf('set phi') !== -1) {
-                        await ic.delphiCls.applyCommandPhi(lastCommand);
-                    }
-                    else if(lastCommand.indexOf('set delphi') !== -1) {
-                        await ic.delphiCls.applyCommandDelphi(lastCommand);
                     }
                     else if(lastCommand.indexOf('view annotations') == 0
                       //|| lastCommand.indexOf('set annotation cdd') == 0

@@ -372,11 +372,6 @@ class ClickMenu {
         });
 
 
-        me.myEventCls.onIds(["#" + me.pre + "mn1_delphi", "#" + me.pre + "mn1_delphi2", "#" + me.pre + "tool_delphi"], "click", function(e) { let ic = me.icn3d; //e.preventDefault();
-           ic.loadPhiFrom = 'delphi';
-           $("#" + me.pre + "dl_delphi_tabs").tabs();
-           me.htmlCls.dialogCls.openDlg('dl_delphi', 'Please set parameters to display DelPhi potential map');
-        });
 
         me.myEventCls.onIds("#" + me.pre + "mn1_phi", "click", function(e) { let ic = me.icn3d; //e.preventDefault();
            ic.loadPhiFrom = 'phi';
@@ -1710,17 +1705,6 @@ class ClickMenu {
            thisClass.setLogCmd('setoption map nothing', true);
         });
 
-        me.myEventCls.onIds(["#" + me.pre + "delphimapNo", "#" + me.pre + "phimapNo", "#" + me.pre + "phiurlmapNo", "#" + me.pre + "mn1_phimapNo"], "click", function(e) { let ic = me.icn3d; //e.preventDefault();
-           ic.setOptionCls.setOption('phimap', 'nothing');
-           thisClass.setLogCmd('setoption phimap nothing', true);
-        });
-
-        me.myEventCls.onIds(["#" + me.pre + "delphimapNo2", "#" + me.pre + "phimapNo2", "#" + me.pre + "phiurlmapNo2"], "click", function(e) { let ic = me.icn3d; //e.preventDefault();
-           //ic.setOptionCls.setOption('surface', 'nothing');
-           //thisClass.setLogCmd('set surface nothing', true);
-           ic.setOptionCls.setOption('phisurface', 'nothing');
-           thisClass.setLogCmd('setoption phisurface nothing', true);
-        });
 
         me.myEventCls.onIds("#" + me.pre + "applymap2fofc", "click", async function(e) { let ic = me.icn3d; 
            e.preventDefault();

@@ -360,27 +360,7 @@ class SetHtml {
     getFootHtml(type, tabName) { let me = this.icn3dui, ic = me.icn3d;
         let footHtml = "<div style='width:500px;'>";
 
-        if(type == 'delphi') {
-            if(me.cfg.cid) {
-                footHtml += "<b>Note</b>: Partial charges(MMFF94) are from PubChem Compound SDF files.<br/><br/>";
-            }
-            else {
-                footHtml += "<b>Note</b>: Only the selected residues are used for <a href='http://honig.c2b2.columbia.edu/delphi'>DelPhi</a> potential calculation by solving linear Poisson-Boltzmann equation.";
-
-                footHtml += '<div style="width:20px; margin-top:6px; display:inline-block;"><span id="'
-                  + me.pre + tabName + '_expand" class="ui-icon ui-icon-plus icn3d-expand icn3d-link" style="width:15px;" title="Expand"></span><span id="'
-                  + me.pre + tabName + '_shrink" class="ui-icon ui-icon-minus icn3d-shrink icn3d-link" style="display:none; width:15px;" title="Shrink"></span></div><br>';
-                footHtml += me.htmlCls.divStr + tabName + "' style='display:none;'>";
-
-                footHtml += "<br>The hydrogens and partial charges of proteins and nucleotides are added using <a href='http://compbio.clemson.edu/pka_webserver'>DelPhiPKa</a> with the Amber charge and size files. The hydrogens of ligands are added using <a href='http://openbabel.org/wiki/Main_Page'>Open Babel</a>. The partial charges of ligands are calculated using <a href='http://ambermd.org/antechamber/ac.html'>Antechamber</a> with the Gasteiger charge method. All partial charges are calculated at pH 7.<br/><br/>";
-
-                footHtml += "Lipids are treated as ligands. Please use \"HETATM\" instead of \"ATOM  \" for each lipid atom in your PDB file. Each phosphate in lipids is assigned with a charge of -1. You can download PQR and modify it, or prepare your PQR file using other tools. Then load the PQR file at the menu \"Analysis > Load PQR/Potential\".<br/><br/>";
-
-                footHtml += "</div>";
-            }
-        }
-        else {
-            footHtml += "<b>Note</b>: Always load a PDB file before loading a PQR or DelPhi potential file.";
+            footHtml += "<b>Note</b>: Always load a PDB file before loading a PQR or potential file.";
 
             footHtml += '<div style="width:20px; margin-top:6px; display:inline-block;"><span id="'
               + me.pre + tabName + '_expand" class="ui-icon ui-icon-plus icn3d-expand icn3d-link" style="width:15px;" title="Expand"></span><span id="'
@@ -394,7 +374,6 @@ class SetHtml {
             footHtml += "<br/><br/>";
 
             footHtml += "</div>";
-        }
         footHtml += "</div>";
 
         return footHtml;
@@ -409,10 +388,7 @@ class SetHtml {
         tab2 = 'Surface with Potential';
         //tab3 = 'Download PQR';
 
-        if(type == 'delphi') {
-            name1 = 'delphi';
-        }
-        else if(type == 'local') {
+        if(type == 'local') {
             name0 = 'pqr';
             name1 = 'phi';
             name2 = 'cube';
@@ -424,7 +400,7 @@ class SetHtml {
         }
 
         html += me.htmlCls.divStr + "dl_" + name1 + "' class='" + dialogClass + "'>";
-        html += me.htmlCls.setDialogCls.addNotebookTitle("dl_" + name1, 'DelPhi Potential');
+        html += me.htmlCls.setDialogCls.addNotebookTitle("dl_" + name1, 'Potential');
         
         html += me.htmlCls.divStr + "dl_" + name1 + "_tabs' style='border:0px;'>";
         html += "<ul>";
@@ -434,7 +410,6 @@ class SetHtml {
         html += "</ul>";
 
         html += me.htmlCls.divStr + name1 + "tab1'>";
-        if(type == 'delphi') html += this.addGsizeSalt(name1 + "1") + "<br>";
 
         html += "<span style='white-space:nowrap;font-weight:bold;'>Potential contour at: <select id='" + me.pre + name1 + "contour'>";
 
@@ -446,11 +421,7 @@ class SetHtml {
         let htmlTmp;
 
         // tab1: equipotential map
-        if(type == 'delphi') {
-            html += me.htmlCls.buttonStr + "reload_" + name1 + "file' style='margin-top: 6px;'>Equipotential Map</button>";
-            html += me.htmlCls.buttonStr + name1 + "mapNo' style='margin-left:30px;'>Remove Map</button><br>";
-        }
-        else if(type == 'local') {
+        if(type == 'local') {
             html += me.htmlCls.divStr + name1 + "tab1_tabs' style='border:0px;'>";
             html += "<ul>";
             html += "<li><a href='#" + me.pre + name1 + "tab1_" + name0 + "'>PQR</a></li>";
@@ -499,7 +470,6 @@ class SetHtml {
         html += "</div>";
 
         html += me.htmlCls.divStr + name1 + "tab2'>";
-        if(type == 'delphi') html += this.addGsizeSalt(name1 + "2") + "<br>";
 
         html += "<span style='white-space:nowrap;font-weight:bold;'>Surface with max potential at: <select id='" + me.pre + name1 + "contour2'>";
 
@@ -527,11 +497,7 @@ class SetHtml {
         html += "<br/>";
 
         // tab2: surface with potential
-        if(type == 'delphi') {
-            html += me.htmlCls.buttonStr + "reload_" + name1 + "file2' style='margin-top: 6px;'>Surface with Potential</button>";
-            html += me.htmlCls.buttonStr + name1 + "mapNo2' style='margin-left:30px;'>Remove Surface</button><br>";
-        }
-        else if(type == 'local') {
+        if(type == 'local') {
             html += me.htmlCls.divStr + name1 + "tab2_tabs' style='border:0px;'>";
             html += "<ul>";
             html += "<li><a href='#" + me.pre + name1 + "tab2_" + name0 + "'>PQR</a></li>";
@@ -624,7 +590,7 @@ class SetHtml {
             pdbstr +=(me.cfg.cid) ? ic.saveFileCls.getAtomPDB(atomHash, true, undefined, undefined, undefined, undefined, bMergeIntoOne, bOneLetterChain) : ic.saveFileCls.getAtomPDB(atomHash, undefined, undefined, undefined, undefined, undefined, bMergeIntoOne, bOneLetterChain);
             pdbstr += ic.saveFileCls.getAtomPDB(ionHash, true, undefined, true, undefined, undefined, bMergeIntoOne, bOneLetterChain);
 
-            let url = me.htmlCls.baseUrl + "delphi/delphi.cgi";
+            let url = me.htmlCls.baseUrl + "pdb2pqr/pdb2pqr.cgi";
 
             let pdbid =(me.cfg.cid) ? me.cfg.cid : Object.keys(ic.structures).toString();
 

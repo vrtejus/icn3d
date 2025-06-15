@@ -126,70 +126,7 @@ class ApplyMap {
         }
     }
 
-    applyPhimapOptions(options) { let ic = this.icn3d, me = ic.icn3dui;
-        if(options === undefined) options = ic.opts;
 
-        switch (options.phimapwireframe) {
-            case 'yes':
-                options.phimapwireframe = true;
-                break;
-            case 'no':
-                options.phimapwireframe = false;
-                break;
-        }
-
-        let atoms, currAtoms;
-
-        // only show the surface for atoms which are displaying
-        atoms = me.hashUtilsCls.intHash(ic.dAtoms, ic.hAtoms);
-
-        currAtoms = me.hashUtilsCls.hash2Atoms(atoms, ic.atoms);
-
-        switch (options.phimap.toLowerCase()) {
-            case 'phi':
-                ic.surfaceCls.createSurfaceRepresentation(currAtoms, 14, options.phimapwireframe);
-                break;
-            case 'nothing':
-                // remove surfaces
-                this.removePhimaps();
-                break;
-        }
-    }
-
-    applyphisurfaceOptions(options) { let ic = this.icn3d, me = ic.icn3dui;
-        if(options === undefined) options = ic.opts;
-
-        //switch (options.wirefraic.toLowerCase()) {
-        switch (ic.phisurfwf) {
-            case 'yes':
-                options.phisurfwf = true;
-                break;
-            case 'no':
-                options.phisurfwf = false;
-                break;
-        }
-
-        options.phisurfop = parseFloat(ic.phisurfop);
-
-        let atoms, currAtoms;
-
-        // only show the surface for atoms which are displaying
-        atoms = me.hashUtilsCls.intHash(ic.dAtoms, ic.hAtoms);
-        // exclude water molecules
-        if(options['water'] === 'nothing') atoms = me.hashUtilsCls.exclHash(atoms, ic.water);
-
-        currAtoms = me.hashUtilsCls.hash2Atoms(atoms, ic.atoms);
-
-        switch (options.phisurface.toLowerCase()) {
-            case 'phi':
-                ic.surfaceCls.createSurfaceRepresentation(currAtoms, parseInt(ic.phisurftype), options.phisurfwf, options.phisurfop);
-                break;
-            case 'nothing':
-                // remove surfaces
-                this.removeSurfaces();
-                break;
-        }
-    }
 
     //Remove previously drawn surfaces.
     removeSurfaces() { let ic = this.icn3d, me = ic.icn3dui;
@@ -227,15 +164,6 @@ class ApplyMap {
        ic.prevEmmaps = [];
     }
 
-    removePhimaps() { let ic = this.icn3d, me = ic.icn3dui;
-       // remove prevous highlight
-
-       for(let i = 0, il = ic.prevPhimaps.length; i < il; ++i) {
-           ic.mdl.remove(ic.prevPhimaps[i]);
-       }
-
-       ic.prevPhimaps = [];
-    }
 
     removeLastMap() { let ic = this.icn3d, me = ic.icn3dui;
        // remove prevous highlight

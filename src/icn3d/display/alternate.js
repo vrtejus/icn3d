@@ -107,20 +107,7 @@ class Alternate {
         ic.applyMapCls.removeEmmaps();
         ic.applyMapCls.applyEmmapOptions();
 
-        // allow the alternation of DelPhi map
-        /*
-        // Option 1: recalculate =========
-        ic.applyMapCls.removePhimaps();
-        await ic.delphiCls.loadDelphiFile('delphi');
 
-        ic.applyMapCls.removeSurfaces();
-        await ic.delphiCls.loadDelphiFile('delphi2');
-        // ==============
-        */
-
-        // Option 2: NO recalculate, just show separately =========
-        ic.applyMapCls.removePhimaps();
-        ic.applyMapCls.applyPhimapOptions();
 
         ic.applyMapCls.removeSurfaces();
         ic.applyMapCls.applyphisurfaceOptions();

@@ -50,19 +50,6 @@ class SetOption {
           //if(ic.bRender) ic.drawCls.render();
           ic.drawCls.draw(); // to make surface work in assembly
       }
-      else if(id === 'phimap' || id === 'phimapwireframe') {
-          if(id === 'phimapwireframe') {
-              ic.applyMapCls.removeLastPhimap();
-          }
-          ic.applyMapCls.applyPhimapOptions();
-          //if(ic.bRender) ic.drawCls.render();
-          ic.drawCls.draw(); // to make surface work in assembly
-      }
-      else if(id === 'phisurface') {
-          ic.applyMapCls.applyphisurfaceOptions();
-          //if(ic.bRender) ic.drawCls.render();
-          ic.drawCls.draw(); // to make surface work in assembly
-      }
       else if(id === 'chemicalbinding') {
           ic.bSkipChemicalbinding = false;
           ic.drawCls.draw();

@@ -571,12 +571,6 @@ class ApplyCommand {
       else if(command == 'setoption emmap nothing') {
          ic.setOptionCls.setOption('emmap', 'nothing');
       }
-      else if(command == 'setoption phimap nothing') {
-         ic.setOptionCls.setOption('phimap', 'nothing');
-      }
-      else if(command == 'setoption phisurface nothing') {
-         ic.setOptionCls.setOption('phisurface', 'nothing');
-      }
       else if(command == 'clear symd symmetry') {
          ic.symdArray = [];
       }
@@ -1682,11 +1676,8 @@ class ApplyCommand {
         if(cmd.indexOf('load') == 0) return 'File > Retrieve by ID, Align';
         else if(cmd.indexOf('set map') == 0 && cmd.indexOf('set map wireframe') == -1) return 'Style > Electron Density';
         else if(cmd.indexOf('set emmap') == 0 && cmd.indexOf('set emmap wireframe') == -1) return 'Style > EM Density Map';
-        else if(cmd.indexOf('set phi') == 0) return 'Analysis > Load Potential > URL(CORS) Phi/Cube';
-        else if(cmd.indexOf('set delphi') == 0) return 'Analysis > DelPhi Potential';
         else if(cmd.indexOf('setoption map') == 0) return 'Style > Remove Map';
         else if(cmd.indexOf('setoption emmap') == 0) return 'Style > Remove EM Map';
-        //else if(cmd.indexOf('setoption phimap') == 0) return 'Analysis > Remove Potential';
         else if(cmd.indexOf('view annotations') == 0) return seqAnnoStr;
         else if(cmd.indexOf('set annotation all') == 0) return seqAnnoStr + ': "All" checkbox';
         else if(cmd.indexOf('set annotation clinvar') == 0) return seqAnnoStr + ': "ClinVar" checkbox';

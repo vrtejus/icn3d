@@ -676,15 +676,6 @@ class Scene {
                    //ic.canvasUILog.updateElement( "info", "ERROR: " + err );
                 }
            } },
-           delphi: { type: "button", paddingTop: paddingtop, position:{ top: margin + 3*(btnHeight + margin), left: margin + 4*(btnWidth + margin)}, width: btnWidth, height: btnHeight, fontColor: fontColor, fontSize: fontSize, backgroundColor: bkgdColor, hover: hoverColor, onSelect: async function() {
-               let gsize = 65, salt = 0.15, contour = 2, bSurface = true;
-               ic.phisurftype = 22; // molecular surface
-               ic.phisurfop = 1.0; // opacity
-               ic.phisurfwf = 'no'; // wireframe
-               await ic.delphiCls.CalcPhi(gsize, salt, contour, bSurface);
-               
-               ic.cam.remove( ic.canvasUI.mesh );
-           } },
             removeLabel: { type: "button", paddingTop: paddingtop, position:{ top: margin + 4*(btnHeight + margin), left: margin + 4*(btnWidth + margin) }, width: btnWidth, height: btnHeight, fontColor: fontColor, fontSize: fontSize, backgroundColor: bkgdColor, hover: hoverColor, onSelect: function() {
                 for(let name in ic.labels) {
                     //if(name === 'residue' || name === 'custom') {

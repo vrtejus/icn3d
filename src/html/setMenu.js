@@ -430,7 +430,6 @@ class SetMenu {
         // Analysis menu
         html += tdStrBorder + this.setIcon(iconType, 'tool_selectannotations', 'Sequences & Annotations', 'grip-lines') + "</td>";
         html += tdStr + this.setIcon(iconType, 'hbondsYes', 'Interactions', 'users') + "</td>";
-        html += tdStr + this.setIcon(iconType, 'tool_delphi', 'DelPhi Potentials', 'cloud-meatball') + "</td>";
         html += tdStr + this.setIcon(iconType, 'removeLabels', 'Remove Labels', 'remove-format') + "</td>";
 
         // Help menu
